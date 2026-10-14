@@ -1,0 +1,16 @@
+{
+	"name": "smart-typography",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"build": "bun build ./src/index.ts --outfile ./dist/index.js --target browser --format cjs --external @cortex.md/api --external @codemirror/state --external @codemirror/view",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@cortex.md/api": "^0.2.0"
+	},
+	"devDependencies": {
+		"typescript": "~5.8.3"
+	}
+}

@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install Cortex CLI
+        run: bun add -g "@cortex.md/cli@^0.3.0"
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Package release
+        run: cortex pack
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BUILD="dist/cortex-build/build.json"
+          TAG="$(jq -r .tagName "$BUILD")"
+          if [ "$GITHUB_REF_NAME" != "$TAG" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match manifest version $TAG. Use 'cortex release' to bump and tag together."
+            exit 1
+          fi
+          TITLE="$(jq -r .releaseName "$BUILD")"
+          NOTES="dist/cortex-build/$(jq -r .releaseNotes "$BUILD")"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/cortex-build/assets/* --clobber
+            gh release edit "$TAG" --title "$TITLE" --notes-file "$NOTES" --latest
+          else
+            gh release create "$TAG" dist/cortex-build/assets/* --title "$TITLE" --notes-file "$NOTES" --latest --verify-tag
+          fi

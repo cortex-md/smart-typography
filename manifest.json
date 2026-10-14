@@ -1,0 +1,11 @@
+{
+	"id": "smart-typography",
+	"name": "Smart Typography",
+	"version": "0.1.0",
+	"minAppVersion": "0.1.1",
+	"author": "Cortex Team",
+	"description": "Shows real dashes, arrows, ellipses and symbols while you type, and can apply them to the file.",
+	"icon": "type",
+	"main": "dist/index.js",
+	"permissions": ["editor:read", "vault:read", "vault:write", "notifications"]
+}
