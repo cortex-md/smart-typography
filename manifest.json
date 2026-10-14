@@ -7,5 +7,6 @@
 	"description": "Shows real dashes, arrows, ellipses and symbols while you type, and can apply them to the file.",
 	"icon": "type",
 	"main": "dist/index.js",
-	"permissions": ["editor:read", "vault:read", "vault:write", "notifications"]
+	"permissions": ["editor:read", "vault:read", "vault:write", "notifications"],
+	"screenshots": ["https://raw.githubusercontent.com/cortex-md/smart-typography/main/screenshots/01-live-preview.png", "https://raw.githubusercontent.com/cortex-md/smart-typography/main/screenshots/03-command.png", "https://raw.githubusercontent.com/cortex-md/smart-typography/main/screenshots/02-settings.png"]
 }
